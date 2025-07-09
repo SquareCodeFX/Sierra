@@ -83,31 +83,6 @@ jobs:
       shell: bash
 
     - name: Create Release and Upload Asset
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_SECRET }}
-      run: |
-        BUILD_NUMBER=${{ steps.build_number.outputs.BUILD_NUMBER }}
-        JAR_FILE=${{ steps.jar_file.outputs.JAR_FILE }}
-        JAR_NAME=${{ steps.jar_file.outputs.JAR_NAME }}
-
-        # Create release notes
-        cat > release_notes.md << 'EOF'
-        ## HelloWorldPlugin v1.0.$BUILD_NUMBER
-
-        ### Changes in this release:
-        ${{ steps.commits.outputs.COMMITS }}
-
-        ### Installation:
-        1. Download the JAR file below
-        2. Place it in your server's `plugins` folder
-        3. Restart your server
-
-        Built with Java 21 for Minecraft 1.21.3+
-        EOF
-
-        # Create release with GitHub CLI
-        gh release create "v1.0.$BUILD_NUMBER" \
-          --title "Release v1.0.$BUILD_NUMBER" \
-          --notes-file release_notes.md \
-          "$JAR_FILE#$JAR_NAME"
-      shell: bash
+      uses: softprops/action-gh-release@v2
+      with:
+        files: build/libs/*.jar

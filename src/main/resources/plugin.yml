@@ -1,0 +1,6 @@
+name: HelloWorldPlugin
+version: '1.0-SNAPSHOT'
+main: de.feelix.dancemonkey.HelloWorldPlugin
+api-version: '1.21'
+author: feelix
+description: A simple hello world plugin for Minecraft
